@@ -1,6 +1,5 @@
 <template>
   <navbar-index />
-  <h1>Index</h1>
   <router-view />
 </template>
 

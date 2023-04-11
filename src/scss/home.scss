@@ -1,0 +1,61 @@
+@import 'variaveis';
+
+.secao-inicial {
+    img {
+        border-radius: 20px;
+        clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 25% 100%, 0% 50%);
+    }
+
+    background: rgb(222, 222, 222);
+    background: linear-gradient(94deg, rgba(222, 222, 222, 1) 0%, rgba(175, 255, 212, 1) 0%, rgba(138, 255, 171, 1) 44%, rgba(147, 255, 201, 1) 100%);
+
+    h1 {
+        text-transform: $uppercase;
+        font-weight: $bold;
+        color: $preto;
+        margin: 10px;
+        text-shadow: 2px 2px 2px #ffffff;
+        text-align: $center;
+    }
+}
+
+.elevador-lacerda {
+
+    background: rgb(222, 222, 222);
+    background: linear-gradient(94deg, rgba(222, 222, 222, 1) 0%, rgba(192, 227, 255, 1) 0%, rgba(166, 210, 255, 1) 44%, rgba(122, 183, 255, 1) 100%);
+
+}
+
+.farol-da-barra {
+
+    background: $branco;
+}
+
+.tour {
+
+    background: rgb(222, 222, 222);
+    background: linear-gradient(94deg, rgba(222, 222, 222, 1) 0%, rgba(192, 227, 255, 1) 0%, rgba(166, 210, 255, 1) 44%, rgba(122, 183, 255, 1) 100%);
+
+}
+
+.tour, .farol-da-barra, .elevador-lacerda {
+
+    padding: 20px;
+
+    img {
+        border-radius: 20px;
+    }
+
+    h1 {
+        text-transform: $uppercase;
+        font-weight: $bold;
+        color: $preto;
+        margin: 10px;
+        text-shadow: 2px 2px 2px #ffffff;
+        text-align: $center;
+    }
+
+    p {
+        text-align: $center;
+    }
+}
