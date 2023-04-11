@@ -1,0 +1,42 @@
+.navbar-index {
+
+    padding: 1.2rem;
+    clip-path: polygon(0 0, 100% 0%, 100% 79%, 56% 88%, 0 99%);
+
+    .navbar-brand {
+        text-transform: uppercase;
+        font-weight: bold;
+        color: black;
+        margin: 10px;
+    }
+
+    .nav-link {
+        text-transform: uppercase;
+        font-weight: bold;
+        color: black;
+        margin: 10px;
+    }
+
+    .nav-link:hover {
+        transform: scale(1.2);
+        transition: .2s
+    }
+}
+
+.bg-index {
+    background: rgb(222, 222, 222);
+    background: linear-gradient(307deg, rgba(222, 222, 222, 1) 0%, rgba(235, 235, 235, 1) 0%, rgba(138, 255, 246, 1) 44%, rgba(147, 231, 255, 1) 100%);
+}
+
+.navbar-nav {
+    .nav-item {
+      .nav-link {
+        &.active {
+          color: rgb(110, 110, 110);
+          border-radius: 20px;
+          transform: scale(1);
+          cursor: default;
+        }
+      }
+    }
+}
