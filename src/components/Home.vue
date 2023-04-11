@@ -66,14 +66,16 @@
             </div>
         </div>
     </div>
+    <Footer />
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
+import Footer from './Footer.vue'
 
 @Options({
     components: {
-
+        Footer
     },
 })
 export default class Home extends Vue {

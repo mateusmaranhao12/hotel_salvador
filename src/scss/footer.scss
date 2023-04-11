@@ -1,0 +1,34 @@
+@import 'variaveis';
+
+.footer {
+    background: rgb(222, 222, 222);
+    background: linear-gradient(94deg, rgba(222, 222, 222, 1) 0%, rgba(0, 142, 255, 1) 0%, rgba(55, 154, 255, 1) 44%, rgba(0, 91, 198, 1) 100%);
+
+    h4 {
+        text-align: $center;
+        color: $branco;
+        font-weight: $bold;
+        text-transform: $uppercase;
+        text-shadow: 2px 2px 2px $preto;
+    }
+
+    ul {
+        li {
+            text-align: $center;
+            color: $branco;
+            text-shadow: 2px 2px 2px $preto;
+            list-style: none;
+        }
+    }
+
+    i {
+        color: $branco;
+        text-shadow: 2px 2px 2px $preto;
+    }
+
+    i:hover {
+        transform: scale(1.2);
+        transition: .2s;
+    }
+
+}
