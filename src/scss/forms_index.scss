@@ -1,0 +1,16 @@
+@import 'variaveis';
+
+.login {
+
+    h3 {
+        text-transform: $uppercase;
+        font-weight: $bold;
+        color: $preto;
+        margin: 10px;
+        text-align: $center;
+    }
+
+    .text-primary {
+        text-decoration: none;
+    }
+}
