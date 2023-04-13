@@ -91,22 +91,24 @@ export default class Cadastro extends Vue {
         this.mostrar_senha = !this.mostrar_senha
     }
 
-    enviarFormulario() {
+    enviarFormulario() { //enviar formulario
+
         if (this.validarFormulario()) {
             this.cadastrarUsuario();
         } else {
             this.mensagem_alerta = {
                 status: 'alert alert-danger',
-                mensagem: 'Preencha todos os campos!'
+                mensagem: 'Erro. Preencha todos os campos!'
             }
         }
 
         setTimeout(() => {
-            this.mensagem_alerta = {status: '', mensagem: '' }
+            this.mensagem_alerta = { status: '', mensagem: '' }
         }, 5000)
+
     }
 
-    validarFormulario() {
+    validarFormulario() { //verificar se todos os campos foram preenchidos
         if (
             this.usuarios_cadastrados.nome === '' ||
             this.usuarios_cadastrados.email === '' ||
@@ -119,29 +121,46 @@ export default class Cadastro extends Vue {
         }
     }
 
-    cadastrarUsuario() {
+    cadastrarUsuario() { //cadastro de usuários
 
-        var cadastrar_usuario = this.toFormData(this.usuarios_cadastrados)
-
-        axios.post(
-            'http://localhost/Projetos/hotel_salvador/src/backend/cadastrar_usuario.php', cadastrar_usuario
-        ).then((res) => {
-            if (res.data.status === 'sucesso') {
-                this.mensagem_alerta = {
-                    status: 'alert alert-success',
-                    mensagem: 'Usuário cadastrado com sucesso!'
-                }
-            } else if (res.data.status === 'erro') {
+        // Verificar se já existe um usuário com o mesmo e-mail ou CPF
+        axios.get('http://localhost/Projetos/hotel_salvador/src/backend/verificar_usuario.php', {
+            params: {
+                email: this.usuarios_cadastrados.email,
+                cpf: this.usuarios_cadastrados.cpf
+            }
+        }).then((res) => {
+            if (res.data.status === 'erro' && res.data.usuario_existente) {
+                // Já existe um usuário com as mesmas informações
                 this.mensagem_alerta = {
                     status: 'alert alert-danger',
-                    mensagem: 'Verifique se todos os dados foram preenchidos!'
+                    mensagem: 'Já existe um usuário com o mesmo e-mail ou CPF!'
                 }
+            } else {
+                // Não existe um usuário com as mesmas informações, pode cadastrar um novo usuário
+                var cadastrar_usuario = this.toFormData(this.usuarios_cadastrados)
+
+                axios.post(
+                    'http://localhost/Projetos/hotel_salvador/src/backend/cadastrar_usuario.php', cadastrar_usuario
+                ).then((res) => {
+                    if (res.data.status === 'sucesso') {
+                        this.mensagem_alerta = {
+                            status: 'alert alert-success',
+                            mensagem: res.data.mensagem
+                        }
+                    } else if (res.data.status === 'erro') {
+                        this.mensagem_alerta = {
+                            status: 'alert alert-danger',
+                            mensagem: res.data.mensagem
+                        }
+                    }
+                    setTimeout(() => {
+                        this.mensagem_alerta = { status: '', mensagem: '' }
+                    }, 5000)
+                })
+                this.limparFormulario()
             }
-            setTimeout(() => {
-                this.mensagem_alerta = { status: '', mensagem: '' }
-            }, 5000)
         })
-        this.limparFormulario()
     }
 
     limparFormulario() {
