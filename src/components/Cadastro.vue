@@ -10,25 +10,25 @@
                                 {{ mensagem_alerta.mensagem }}
                             </div>
                             <div class="form-group">
-                                <label for="nome">Nome</label>
+                                <label for="nome">Nome <span class="text-danger">*</span></label>
                                 <input type="text" ref="nome" placeholder="Nome" id="nome" class="form-control mb-3"
                                     name="nome" v-model="usuarios_cadastrados.nome" />
                             </div>
 
                             <div class="form-group">
-                                <label for="email">E-mail</label>
+                                <label for="email">E-mail <span class="text-danger">*</span></label>
                                 <input type="text" ref="email" placeholder="E-mail" id="email" class="form-control mb-3"
                                     name="email" v-model="usuarios_cadastrados.email" />
                             </div>
 
                             <div class="form-group">
-                                <label for="cpf">CPF</label>
+                                <label for="cpf">CPF <span class="text-danger">*</span></label>
                                 <input type="text" ref="cpf" placeholder="CPF" id="cpf" class="form-control mb-3"
                                     maxlength="11" name="cpf" v-model="usuarios_cadastrados.cpf" />
                             </div>
 
                             <div class="form-group">
-                                <label for="senha">Senha</label>
+                                <label for="senha">Senha <span class="text-danger">*</span></label>
                                 <div class="input-group mb-3">
                                     <input v-if="mostrar_senha" type="text" class="form-control" placeholder="Senha"
                                         name="senha" aria-label="Senha" aria-describedby="button-addon2"

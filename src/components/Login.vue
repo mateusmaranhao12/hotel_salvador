@@ -10,13 +10,13 @@
                         </div>
                         <form @submit.prevent="fazerLogin">
                             <div class="form-group">
-                                <label for="email">E-mail</label>
+                                <label for="email">E-mail <span class="text-danger">*</span> </label>
                                 <input type="text" ref="email" placeholder="e-mail" id="email" class="form-control mb-3"
                                     name="email" v-model="usuarios_cadastrados.email" />
                             </div>
 
                             <div class="form-group">
-                                <label for="senha">Senha</label>
+                                <label for="senha">Senha <span class="text-danger">*</span></label>
                                 <div class="input-group mb-3">
                                     <input v-if="mostrar_senha" type="text" class="form-control" placeholder="Senha"
                                         name="senha" aria-label="Senha" aria-describedby="button-addon2"
@@ -72,13 +72,6 @@ export default class Login extends Vue {
     }
 
     fazerLogin() { //metodo fazer login
-        // Verifica se o email e a senha foram preenchidos
-        if (!this.usuarios_cadastrados.email || !this.usuarios_cadastrados.senha) {
-            this.mensagem_erro_login = 'Por favor, preencha seu e-mail e senha.'
-            setTimeout(() => {
-                this.mensagem_erro_login = ''
-            }, 5000)
-        }
 
         // Cria um objeto FormData para enviar os dados de login
         const formData = new FormData()
