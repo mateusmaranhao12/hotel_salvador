@@ -1,6 +1,6 @@
 <?php
 
-    header('Access-Control-Allow-Origin: *');
+    include "acess_control.php";
 
     include "connection.php";
 

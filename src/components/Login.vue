@@ -5,7 +5,10 @@
                 <h3 class="card-title mb-4">Faça Login agora mesmo para fazer suas reservas!</h3>
                 <div class="container">
                     <div class="row">
-                        <form>
+                        <div v-if="mensagem_erro_login" class="alert alert-danger text-center">
+                            {{ mensagem_erro_login }}
+                        </div>
+                        <form @submit.prevent="fazerLogin">
                             <div class="form-group">
                                 <label for="email">E-mail</label>
                                 <input type="text" ref="email" placeholder="e-mail" id="email" class="form-control mb-3"
@@ -51,6 +54,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
+import axios from 'axios'
 
 @Options({
     components: {
@@ -60,14 +64,48 @@ export default class Login extends Vue {
 
     usuarios_cadastrados = { email: '', senha: '' }
     mostrar_senha = false
-    senha = ""
+    senha = ''
+    mensagem_erro_login = ''
 
     alternarExibicaoSenha() {
         this.mostrar_senha = !this.mostrar_senha
     }
 
-    fazerLogin() {
-        this.$router.push('/dashboard')
+    fazerLogin() { //metodo fazer login
+        // Verifica se o email e a senha foram preenchidos
+        if (!this.usuarios_cadastrados.email || !this.usuarios_cadastrados.senha) {
+            this.mensagem_erro_login = 'Por favor, preencha seu e-mail e senha.'
+            setTimeout(() => {
+                this.mensagem_erro_login = ''
+            }, 5000)
+        }
+
+        // Cria um objeto FormData para enviar os dados de login
+        const formData = new FormData()
+        formData.append('email', this.usuarios_cadastrados.email)
+        formData.append('senha', this.usuarios_cadastrados.senha)
+
+        // Envia os dados de login para o servidor
+        axios.post('http://localhost/Projetos/hotel_salvador/src/backend/login.php', formData)
+            .then(res => {
+                // Se o login for válido, redireciona para a página de dashboard
+                if (res.data.status === 'OK') {
+                    this.$router.push('/dashboard')
+                } else {
+                    // Caso contrário, exibe uma mensagem de erro
+                    this.mensagem_erro_login = res.data.mensagem
+                    setTimeout(() => {
+                        this.mensagem_erro_login = ''
+                    }, 5000)
+                }
+            })
+            .catch(error => {
+                console.error(error)
+                this.mensagem_erro_login = 'Ocorreu um erro ao fazer o login. Por favor, tente novamente mais tarde.'
+                setTimeout(() => {
+                    this.mensagem_erro_login = ''
+                }, 5000)
+            })
     }
 }
 </script>
