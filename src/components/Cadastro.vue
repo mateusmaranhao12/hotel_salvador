@@ -6,7 +6,9 @@
                 <div class="container">
                     <div class="row">
                         <form>
-
+                            <div v-if="mensagem_alerta" class="mt-3 mb-3 text-center" :class="mensagem_alerta.status">
+                                {{ mensagem_alerta.mensagem }}
+                            </div>
                             <div class="form-group">
                                 <label for="nome">Nome</label>
                                 <input type="text" ref="nome" placeholder="Nome" id="nome" class="form-control mb-3"
@@ -21,8 +23,8 @@
 
                             <div class="form-group">
                                 <label for="cpf">CPF</label>
-                                <input type="text" ref="cpf" placeholder="CPF" id="cpf" class="form-control mb-3" name="cpf"
-                                    v-model="usuarios_cadastrados.cpf" />
+                                <input type="text" ref="cpf" placeholder="CPF" id="cpf" class="form-control mb-3"
+                                    maxlength="11" name="cpf" v-model="usuarios_cadastrados.cpf" />
                             </div>
 
                             <div class="form-group">
@@ -45,7 +47,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <button class="btn btn-primary float-end mt-5"
-                                        @click.prevent="cadastrarUsuario()">Cadastrar-se</button>
+                                        @click.prevent="enviarFormulario()">Cadastrar-se</button>
                                 </div>
                             </div>
 
@@ -64,26 +66,97 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
+import axios from 'axios'
+
+interface MensagemAlerta {
+    status: string
+    mensagem: string
+}
 
 @Options({
-
     name: 'Cadastro',
-    
+
     components: {
     },
 })
+
 export default class Cadastro extends Vue {
 
     usuarios_cadastrados = { nome: '', email: '', cpf: '', senha: '' }
     mostrar_senha = false
     senha = ''
+    mensagem_alerta: MensagemAlerta | null = null
 
     alternarExibicaoSenha() {
         this.mostrar_senha = !this.mostrar_senha
     }
 
+    enviarFormulario() {
+        if (this.validarFormulario()) {
+            this.cadastrarUsuario();
+        } else {
+            this.mensagem_alerta = {
+                status: 'alert alert-danger',
+                mensagem: 'Preencha todos os campos!'
+            }
+        }
+
+        setTimeout(() => {
+            this.mensagem_alerta = {status: '', mensagem: '' }
+        }, 5000)
+    }
+
+    validarFormulario() {
+        if (
+            this.usuarios_cadastrados.nome === '' ||
+            this.usuarios_cadastrados.email === '' ||
+            this.usuarios_cadastrados.cpf === '' ||
+            this.usuarios_cadastrados.senha === ''
+        ) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     cadastrarUsuario() {
-        console.log('Usuário cadastrado')
+
+        var cadastrar_usuario = this.toFormData(this.usuarios_cadastrados)
+
+        axios.post(
+            'http://localhost/Projetos/hotel_salvador/src/backend/cadastrar_usuario.php', cadastrar_usuario
+        ).then((res) => {
+            if (res.data.status === 'sucesso') {
+                this.mensagem_alerta = {
+                    status: 'alert alert-success',
+                    mensagem: 'Usuário cadastrado com sucesso!'
+                }
+            } else if (res.data.status === 'erro') {
+                this.mensagem_alerta = {
+                    status: 'alert alert-danger',
+                    mensagem: 'Verifique se todos os dados foram preenchidos!'
+                }
+            }
+            setTimeout(() => {
+                this.mensagem_alerta = { status: '', mensagem: '' }
+            }, 5000)
+        })
+        this.limparFormulario()
+    }
+
+    limparFormulario() {
+        this.usuarios_cadastrados.nome = ''
+        this.usuarios_cadastrados.email = ''
+        this.usuarios_cadastrados.cpf = ''
+        this.usuarios_cadastrados.senha = ''
+    }
+
+    toFormData(obj: Record<string, any>): FormData {
+        const liveFormData = new FormData();
+        for (const key in obj) {
+            liveFormData.append(key, obj[key])
+        }
+        return liveFormData
     }
 }
 </script>
