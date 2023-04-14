@@ -1,6 +1,6 @@
 <?php
 
-    include "acess_control.php";
+    include "access_control.php";
 
     include "connection.php";
 

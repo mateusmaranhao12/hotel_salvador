@@ -80,25 +80,28 @@ export default class Login extends Vue {
 
         // Envia os dados de login para o servidor
         axios.post('http://localhost/Projetos/hotel_salvador/src/backend/login.php', formData)
-            .then(res => {
-                // Se o login for válido, redireciona para a página de dashboard
-                if (res.data.status === 'OK') {
+            .then(response => {
+                // Se o login for válido, armazena o token JWT no local storage e redireciona para a página de dashboard
+                if (response.data.status === 'OK') {
+                    const token = response.data.token
+                    localStorage.setItem('token', token)
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
                     this.$router.push('/dashboard')
                 } else {
                     // Caso contrário, exibe uma mensagem de erro
-                    this.mensagem_erro_login = res.data.mensagem
+                    this.mensagem_erro_login = response.data.mensagem
                     setTimeout(() => {
                         this.mensagem_erro_login = ''
-                    }, 5000)
+                    }, 5000);
                 }
             })
             .catch(error => {
-                console.error(error)
+                console.error(error);
                 this.mensagem_erro_login = 'Ocorreu um erro ao fazer o login. Por favor, tente novamente mais tarde.'
                 setTimeout(() => {
                     this.mensagem_erro_login = ''
-                }, 5000)
-            })
+                }, 5000);
+            });
     }
 }
 </script>
