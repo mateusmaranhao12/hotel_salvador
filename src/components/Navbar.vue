@@ -10,7 +10,7 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <button @click="fazerLogout()" class="nav-link btn btn-link"><i
+                        <button @click="fazerLogout()" class="btn btn-primary"><i
                                 class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
                     </li>
                 </ul>
