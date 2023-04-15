@@ -1,19 +1,31 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-index bg-index">
         <div class="container-fluid">
-            <router-link to="/" class="navbar-brand"><i class="fa-solid fa-umbrella-beach"></i> Hotel
-                Salvador</router-link>
+            <router-link to="/" class="navbar-brand"><i class="fa-solid fa-umbrella-beach"></i> Hotel Salvador</router-link>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
+            <div class="collapse navbar-collapse justify-content-start" id="navbarNav">
+                <ul class="navbar-nav flex-grow-1"> <!-- Adiciona a classe "flex-grow-1" aqui -->
                     <li class="nav-item">
-                        <button @click="fazerLogout()" class="btn btn-primary"><i
-                                class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+                        <router-link :class="{ active: $route.name === 'PaginaInicial' }" :to="{ name: 'PaginaInicial' }"
+                            class="nav-link"><i class="fa-solid fa-home"></i> Página Inicial</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link :class="{ active: $route.name === 'FazerReserva' }" :to="{ name: 'FazerReserva' }"
+                            class="nav-link"><i class="fa-solid fa-user"></i> Fazer Reserva</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link :class="{ active: $route.name === 'ListaReservas' }" :to="{ name: 'ListaReservas' }"
+                            class="nav-link"><i class="fa-sharp fa-solid fa-user-plus"></i> Lista de reservas</router-link>
                     </li>
                 </ul>
+                <div> <!-- Adiciona uma div aqui para conter o botão de logout -->
+                    <button @click="fazerLogout()" class="btn btn-primary ms-auto"><i
+                            class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+                    <!-- Adiciona a classe "ms-auto" aqui -->
+                </div>
             </div>
         </div>
     </nav>

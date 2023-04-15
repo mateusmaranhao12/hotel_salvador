@@ -1,9 +1,12 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Cadastro from '@/components/Cadastro.vue'
 import Dashboard from '@/views/Dashboard.vue'
+import FazerReserva from '@/components/FazerReserva.vue'
 import Index from '@/views/Index.vue'
 import Home from '@/components/Home.vue'
+import ListaReservas from '@/components/ListaReservas.vue'
 import Login from '@/components/Login.vue'
+import PaginaInicial from '@/components/PaginaInicial.vue'
 import { usuarioAutenticado } from '@/utils/auth'
 
 const routes: Array<RouteRecordRaw> = [
@@ -39,9 +42,41 @@ const routes: Array<RouteRecordRaw> = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+    redirect: '/dashboard/pagina-inicial',
     meta: {
       requiresAuth: true
-    }
+    },
+
+    children: [
+
+      {
+        path: 'pagina-inicial',
+        name: 'PaginaInicial',
+        component: PaginaInicial,
+        meta: {
+          requiresAuth: true
+        }
+      },
+
+      {
+        path: 'fazer-reserva',
+        name: 'FazerReserva',
+        component: FazerReserva,
+        meta: {
+          requiresAuth: true
+        }
+      },
+
+      {
+        path: 'lista-reservas',
+        name: 'ListaReservas',
+        component: ListaReservas,
+        meta: {
+          requiresAuth: true
+        }
+      }
+
+    ]
   }
 ]
 
