@@ -4,6 +4,7 @@ require "access_control.php";
 include "connection.php";
 use \Firebase\JWT\JWT;
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['email']) && isset($_POST['senha'])) {
         $email = $_POST['email'];

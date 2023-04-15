@@ -1,6 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-index bg-index">
         <div class="container-fluid">
+            <router-link to="/dashboard" class="navbar-brand"><i class="fa-solid fa-user"></i> </router-link>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -40,7 +41,7 @@ import axios from 'axios'
 })
 export default class Navbar extends Vue {
 
-    fazerLogout() {
+    public fazerLogout() {
         // Remove o token JWT do local storage
         localStorage.removeItem('token')
         // Remove o header de autorização do axios
@@ -48,6 +49,7 @@ export default class Navbar extends Vue {
         // Redireciona o usuário de volta para a página de login
         this.$router.push('/')
     }
+
 }
 </script>
 

@@ -87,11 +87,11 @@ export default class Cadastro extends Vue {
     senha = ''
     mensagem_alerta: MensagemAlerta | null = null
 
-    alternarExibicaoSenha() {
+    public alternarExibicaoSenha() {
         this.mostrar_senha = !this.mostrar_senha
     }
 
-    enviarFormulario() { //enviar formulario
+    public enviarFormulario() { //enviar formulario
 
         if (this.validarFormulario()) {
             this.cadastrarUsuario();
@@ -108,7 +108,7 @@ export default class Cadastro extends Vue {
 
     }
 
-    validarFormulario() { //verificar se todos os campos foram preenchidos
+    private validarFormulario() { //verificar se todos os campos foram preenchidos
         if (
             this.usuarios_cadastrados.nome === '' ||
             this.usuarios_cadastrados.email === '' ||
@@ -121,7 +121,7 @@ export default class Cadastro extends Vue {
         }
     }
 
-    cadastrarUsuario() { //cadastro de usuários
+    private cadastrarUsuario() { //cadastro de usuários
 
         // Verificar se já existe um usuário com o mesmo e-mail ou CPF
         axios.get('http://localhost/Projetos/hotel_salvador/src/backend/verificar_usuario.php', {
@@ -163,7 +163,7 @@ export default class Cadastro extends Vue {
         })
     }
 
-    limparFormulario() {
+    public limparFormulario() {
         this.usuarios_cadastrados.nome = ''
         this.usuarios_cadastrados.email = ''
         this.usuarios_cadastrados.cpf = ''

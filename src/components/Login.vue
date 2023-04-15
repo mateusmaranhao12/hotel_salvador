@@ -67,11 +67,11 @@ export default class Login extends Vue {
     senha = ''
     mensagem_erro_login = ''
 
-    alternarExibicaoSenha() {
+    public alternarExibicaoSenha() {
         this.mostrar_senha = !this.mostrar_senha
     }
 
-    fazerLogin() { //metodo fazer login
+    public fazerLogin() { //metodo fazer login
 
         // Cria um objeto FormData para enviar os dados de login
         const formData = new FormData()
