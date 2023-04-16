@@ -7,6 +7,7 @@ import Home from '@/components/Home.vue'
 import ListaReservas from '@/components/ListaReservas.vue'
 import Login from '@/components/Login.vue'
 import PaginaInicial from '@/components/PaginaInicial.vue'
+import PaginaNaoEncontrada from '@/views/PaginaNaoEncontrada.vue'
 import { usuarioAutenticado } from '@/utils/auth'
 
 const routes: Array<RouteRecordRaw> = [
@@ -77,7 +78,9 @@ const routes: Array<RouteRecordRaw> = [
       }
 
     ]
-  }
+  },
+
+  { path: '/:catchAll(.*)*', component: PaginaNaoEncontrada } //caso a rota digitada não exista
 ]
 
 const router = createRouter({
