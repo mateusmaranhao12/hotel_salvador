@@ -88,14 +88,20 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!usuarioAutenticado()) {
-      next(
-        {
-          name: 'Login',
-          replace: true
-        }
-      )
+      next({
+        name: 'Login',
+        replace: true
+      })
     } else {
-      next()
+      // Se o usuário já estiver autenticado, redireciona para a página de dashboard
+      if (to.name === 'Dashboard') {
+        next({
+          name: 'Dashboard',
+          replace: true
+        })
+      } else {
+        next()
+      }
     }
   } else {
     next()
