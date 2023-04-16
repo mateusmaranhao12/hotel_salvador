@@ -24,7 +24,7 @@
                 </ul>
                 <div> <!-- Adiciona uma div aqui para conter o botão de logout -->
                     <button @click="fazerLogout()" class="btn btn-primary ms-auto"><i
-                            class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+                            class="fa-solid fa-arrow-right-from-bracket"></i></button>
                     <!-- Adiciona a classe "ms-auto" aqui -->
                 </div>
             </div>
@@ -36,12 +36,7 @@
 import { Options, Vue } from 'vue-class-component'
 import axios from 'axios'
 import jwt_decode from '@/utils/jwt-decode'
-
-interface TokenPayload {
-  id: string
-  nome: string
-  email: string
-}
+import { TokenPayload } from '@/utils/interfaces'
 
 @Options({
   components: {},
@@ -50,7 +45,7 @@ export default class Navbar extends Vue {
 
   nomeUsuario = ''
 
-  mounted() {
+  created() {
     const token = localStorage.getItem('token')
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
