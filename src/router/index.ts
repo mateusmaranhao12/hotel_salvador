@@ -1,14 +1,19 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Cadastro from '@/components/Cadastro.vue'
-import Dashboard from '@/views/Dashboard.vue'
-import FazerReserva from '@/components/FazerReserva.vue'
-import Index from '@/views/Index.vue'
-import Home from '@/components/Home.vue'
-import ListaReservas from '@/components/ListaReservas.vue'
-import Login from '@/components/Login.vue'
+import { usuarioAutenticado } from '@/utils/auth'
+
+/* Carregamento normal das rotas */
 import PaginaInicial from '@/components/PaginaInicial.vue'
 import PaginaNaoEncontrada from '@/views/PaginaNaoEncontrada.vue'
-import { usuarioAutenticado } from '@/utils/auth'
+
+/* Carregamento com lazy loading das rotas */
+const Cadastro = () => import(/* webpackChunkName: "index" */ '@/components/Cadastro.vue')
+const Dashboard = () => import(/* webpackChunkName: "dashboard" */ '@/views/Dashboard.vue')
+const FazerReserva = () => import(/* webpackChunkName: "dashboard" */ '@/components/FazerReserva.vue')
+const Index = () => import(/* webpackChunkName: "index" */ '@/views/Index.vue')
+const Home = () => import(/* webpackChunkName: "index" */ '@/components/Home.vue')
+const ListaReservas = () => import(/* webpackChunkName: "dashboard" */ '@/components/ListaReservas.vue') 
+const Login = () => import(/* webpackChunkName: "index" */ '@/components/Login.vue') 
+
 
 const routes: Array<RouteRecordRaw> = [
   {
