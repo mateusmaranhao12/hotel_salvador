@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-index bg-index">
         <div class="container-fluid">
-            <router-link to="/dashboard" class="navbar-brand"><i class="fa-solid fa-user"></i> {{ nomeUsuario
+            <router-link to="/dashboard" class="navbar-brand" style="text-transform: none"><i class="fa-solid fa-user"></i> {{ nomeUsuario
             }} </router-link>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
