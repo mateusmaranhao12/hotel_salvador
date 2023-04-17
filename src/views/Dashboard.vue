@@ -1,6 +1,5 @@
 <template>
     <Navbar />
-    <h1>Dashboard</h1>
     <router-view />
 </template>
 
@@ -18,3 +17,7 @@ export default class Dashboard extends Vue {
     
 }
 </script>
+
+<style lang="scss">
+@import '@/scss/dashboard.scss';
+</style>
