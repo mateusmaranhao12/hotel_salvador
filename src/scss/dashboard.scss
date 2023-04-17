@@ -1,6 +1,6 @@
 @import 'variaveis';
 
-.pagina-inicial {
+.pagina-inicial, .reserva {
     background-color: aquamarine;
     padding: 30px;
 
@@ -25,7 +25,7 @@
         text-transform: $uppercase;
         color: $preto;
         font-weight: $bold;
-        text-shadow: 2px 2px 2px $branco;
+        margin-bottom: 20px;
         margin-top: 50px;
         margin-bottom: 20px;
     }
