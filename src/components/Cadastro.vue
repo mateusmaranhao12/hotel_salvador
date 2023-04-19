@@ -67,11 +67,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import axios from 'axios'
-
-interface MensagemAlerta {
-    status: string
-    mensagem: string
-}
+import { MensagemAlerta } from '@/utils/interfaces'
 
 @Options({
     name: 'Cadastro',
@@ -94,7 +90,7 @@ export default class Cadastro extends Vue {
     public enviarFormulario() { //enviar formulario
 
         if (this.validarFormulario()) {
-            this.cadastrarUsuario();
+            this.cadastrarUsuario()
         } else {
             this.mensagem_alerta = {
                 status: 'alert alert-danger',

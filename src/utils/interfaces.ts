@@ -3,3 +3,8 @@ export interface TokenPayload {
   nome: string
   email: string
 }
+
+export interface MensagemAlerta {
+  status: string
+  mensagem: string
+}
