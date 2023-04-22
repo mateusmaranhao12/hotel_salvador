@@ -74,7 +74,8 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end mt-5">
-                                    <button class="btn btn-primary" @click.prevent="enviarFormulario()">Fazer Reserva</button>
+                                    <button class="btn btn-primary" @click.prevent="enviarFormulario()">Fazer
+                                        Reserva</button>
                                 </div>
                             </div>
                         </form>
@@ -91,21 +92,22 @@ import { Options, Vue } from 'vue-class-component'
 import Footer from './Footer.vue'
 import axios from 'axios'
 import { MensagemAlerta } from '@/utils/interfaces'
+import jwt_decode from '@/utils/jwt-decode'
+import { TokenPayload } from '@/utils/interfaces'
 
 @Options({
     components: {
         Footer
     },
 })
-export default class FazerReserva extends Vue {
 
+export default class FazerReserva extends Vue {
     local = ['Barra', 'Itapuã', 'Pelourinho']
     tipo_suite = ['Simples', 'Conforto', 'Premium']
     apartamento = ['101', '102', '103', '104', '105', '106']
     adultos = ['1', '2', '3', '4', '5', '6', '7', '8']
     criancas = ['0', '1', '2', '3', '4', '5', '6', '7', '8']
     mensagem_alerta: MensagemAlerta | null = null
-
     reservas = {
         local: '',
         suite: '',
@@ -113,34 +115,44 @@ export default class FazerReserva extends Vue {
         qtd_adultos: '',
         qtd_criancas: '',
         checkin: '',
-        checkout: ''
+        checkout: '',
+        usuario_id: '',
+        usuario_nome: ''
     }
 
-    public enviarFormulario() { //enviar formulario
+    idUsuario = ''
+    nomeUsuario = ''
 
+    created() {
+        const token = localStorage.getItem('token')
+        if (token) {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+            axios.get('http://localhost/Projetos/hotel_salvador/src/backend/usuarios.php').then(response => {
+                const token_decoded = jwt_decode(token) as TokenPayload
+                this.idUsuario = token_decoded.id
+                this.nomeUsuario = token_decoded.nome
+                this.reservas.usuario_id = this.idUsuario // Define o id do usuário na reserva
+                this.reservas.usuario_nome = this.nomeUsuario // Define o nome do usuário na reserva
+            })
+        }
+    }
+
+    public enviarFormulario() {
         if (this.validarFormulario()) {
             this.fazerReserva()
+            this.limparFormulario()
         } else {
             this.mensagem_alerta = {
                 status: 'alert alert-danger',
                 mensagem: 'Erro. Preencha todos os campos!'
             }
+            setTimeout(() => {
+                this.mensagem_alerta = { status: '', mensagem: '' }
+            }, 5000)
         }
-
-        if (this.reservas.checkin > this.reservas.checkout) {
-            this.mensagem_alerta = {
-                status: 'alert alert-danger',
-                mensagem: 'Informe uma data válida!'
-            }
-        }
-
-        setTimeout(() => {
-            this.mensagem_alerta = { status: '', mensagem: '' }
-        }, 5000)
-
     }
 
-    private validarFormulario() { //verificar se todos os campos foram preenchidos
+    private validarFormulario() {
         if (
             this.reservas.local === '' ||
             this.reservas.suite === '' ||
@@ -151,15 +163,14 @@ export default class FazerReserva extends Vue {
             this.reservas.checkout === '' ||
             this.reservas.checkin > this.reservas.checkout
         ) {
-            return false;
+            return false
         } else {
-            return true;
+            return true
         }
     }
 
     public fazerReserva() {
         var fazer_reserva = this.toFormData(this.reservas)
-
         axios.post(
             'http://localhost/Projetos/hotel_salvador/src/backend/fazer_reserva.php', fazer_reserva
         ).then((res) => {
@@ -178,7 +189,6 @@ export default class FazerReserva extends Vue {
                 this.mensagem_alerta = { status: '', mensagem: '' }
             }, 5000)
         })
-        this.limparFormulario()
     }
 
     public limparFormulario() {
@@ -198,7 +208,6 @@ export default class FazerReserva extends Vue {
         }
         return liveFormData
     }
-
 }
 </script>
 
