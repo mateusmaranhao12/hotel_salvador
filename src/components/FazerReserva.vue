@@ -140,7 +140,6 @@ export default class FazerReserva extends Vue {
     public enviarFormulario() {
         if (this.validarFormulario()) {
             this.fazerReserva()
-            this.limparFormulario()
         } else {
             this.mensagem_alerta = {
                 status: 'alert alert-danger',
@@ -179,6 +178,8 @@ export default class FazerReserva extends Vue {
                     status: 'alert alert-success',
                     mensagem: res.data.mensagem
                 }
+                this.limparFormulario()
+                
             } else if (res.data.status === 'erro') {
                 this.mensagem_alerta = {
                     status: 'alert alert-danger',
