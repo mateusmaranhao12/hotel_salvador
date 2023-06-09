@@ -30,11 +30,8 @@
                             <div class="form-group">
                                 <label for="senha">Senha <span class="text-danger">*</span></label>
                                 <div class="input-group mb-3">
-                                    <input v-if="mostrar_senha" type="text" class="form-control" placeholder="Senha"
+                                    <input :type="mostrar_senha ? 'text' : 'password'" class="form-control" placeholder="Senha"
                                         name="senha" aria-label="Senha" aria-describedby="button-addon2"
-                                        v-model="usuarios_cadastrados.senha">
-                                    <input v-else type="password" class="form-control" placeholder="Senha" name="senha"
-                                        aria-label="Senha" aria-describedby="button-addon2"
                                         v-model="usuarios_cadastrados.senha">
                                     <button @click="alternarExibicaoSenha()" class="btn btn-outline-primary" type="button"
                                         id="senha">
